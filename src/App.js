@@ -162,17 +162,7 @@ function App() {
 
   const restartQuiz = () => {
     console.log("Restarting quiz...");
-    // setQuestions(() => []);
-    // setCurrentQuestion(() => 0);
-    // setScore(() => 0);
-    // setShowScore(() => false);
-    // setAnswers(() => ({}));
-    // setTimeLeft(() => 0);
-    // setQuizState(() => 'not-started');
-    // setSelectedOptions(() => []);
-    // setShowExplanation(() => false);
-    // setDifficulty(() => 'medium');
-    window.location.href = "http://localhost:3000";
+    window.location.href = "https://quiz-app-schoolnet.vercel.app/";
   };
 
   const handleOptionSelect = (option) => {
