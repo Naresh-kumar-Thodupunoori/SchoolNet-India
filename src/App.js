@@ -242,7 +242,7 @@ function App() {
 
   const restartQuiz = () => {
     console.log("Restarting quiz...");
-    window.location.href = "https://quiz-app-schoolnet.vercel.app/";
+    window.location.href = "https://quiz-app-schoolnet-naresh-kumar-thodupunooris-projects.vercel.app/";
   };
 
   const renderProgressBar = () => {
