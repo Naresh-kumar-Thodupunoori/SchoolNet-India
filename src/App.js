@@ -81,6 +81,84 @@ const allQuestions = [
     correctAnswer: "5,730 years",
     explanation: "The half-life of Carbon-14 is approximately 5,730 years, which makes it useful for dating objects up to about 50,000 years old.",
     difficulty: "hard"
+  },
+  {
+    id: 10,
+    type: "short-answer",
+    question: "What is the largest organ in the human body?",
+    correctAnswer: "Skin",
+    explanation: "The skin is the largest organ in the human body, covering an area of about 20 square feet in an average adult.",
+    difficulty: "easy"
+  },
+  {
+    id: 11,
+    type: "multiple-choice",
+    question: "Which of these is not a type of elementary particle?",
+    options: ["Quark", "Lepton", "Boson", "Neutron"],
+    correctAnswer: "Neutron",
+    explanation: "Neutrons are composite particles made up of quarks, while quarks, leptons, and bosons are elementary particles.",
+    difficulty: "hard"
+  },
+  {
+    id: 12,
+    type: "true-false",
+    question: "Sound travels faster in water than in air.",
+    options: ["True", "False"],
+    correctAnswer: "True",
+    explanation: "Sound travels about 4.3 times faster in water than in air due to water's higher density.",
+    difficulty: "medium"
+  },
+  {
+    id: 13,
+    type: "multiple-select",
+    question: "Which of these are mammals?",
+    options: ["Bat", "Penguin", "Whale", "Snake", "Platypus"],
+    correctAnswer: ["Bat", "Whale", "Platypus"],
+    explanation: "Bats, whales, and platypuses are all mammals, characterized by their ability to produce milk and having hair or fur.",
+    difficulty: "medium"
+  },
+  {
+    id: 14,
+    type: "short-answer",
+    question: "What is the most abundant gas in Earth's atmosphere?",
+    correctAnswer: "Nitrogen",
+    explanation: "Nitrogen makes up about 78% of Earth's atmosphere, followed by oxygen at about 21%.",
+    difficulty: "medium"
+  },
+  {
+    id: 15,
+    type: "multiple-choice",
+    question: "Which of these is not one of the four fundamental forces of nature?",
+    options: ["Gravity", "Electromagnetic force", "Strong nuclear force", "Centrifugal force"],
+    correctAnswer: "Centrifugal force",
+    explanation: "The four fundamental forces are gravity, electromagnetic force, strong nuclear force, and weak nuclear force. Centrifugal force is a fictitious force in a rotating reference frame.",
+    difficulty: "hard"
+  },
+  {
+    id: 16,
+    type: "true-false",
+    question: "Vaccines cause autism.",
+    options: ["True", "False"],
+    correctAnswer: "False",
+    explanation: "Numerous scientific studies have found no link between vaccines and autism. The original study suggesting this link was discredited and retracted.",
+    difficulty: "easy"
+  },
+  {
+    id: 17,
+    type: "multiple-select",
+    question: "Which of these elements are noble gases?",
+    options: ["Helium", "Oxygen", "Neon", "Chlorine", "Argon"],
+    correctAnswer: ["Helium", "Neon", "Argon"],
+    explanation: "Helium, neon, and argon are noble gases, characterized by their full outer shell of electrons and chemical inertness.",
+    difficulty: "hard"
+  },
+  {
+    id: 18,
+    type: "short-answer",
+    question: "What is the speed of light in vacuum (in meters per second)?",
+    correctAnswer: "299,792,458",
+    explanation: "The speed of light in vacuum is exactly 299,792,458 meters per second, as defined by the International System of Units (SI).",
+    difficulty: "hard"
   }
 ];
 
@@ -127,6 +205,8 @@ function App() {
     if (currentQuestionData.type === 'multiple-select') {
       isCorrect = JSON.stringify(selectedOptions.sort()) === JSON.stringify(currentQuestionData.correctAnswer.sort());
       selectedAnswer = selectedOptions;
+    } else if (currentQuestionData.type === 'short-answer') {
+      isCorrect = selectedAnswer.toLowerCase() === currentQuestionData.correctAnswer.toLowerCase();
     } else {
       isCorrect = selectedAnswer === currentQuestionData.correctAnswer;
     }
@@ -163,6 +243,15 @@ function App() {
   const restartQuiz = () => {
     console.log("Restarting quiz...");
     window.location.href = "https://quiz-app-schoolnet.vercel.app/";
+  };
+
+  const renderProgressBar = () => {
+    const progress = (currentQuestion / questions.length) * 100;
+    return (
+      <div className="progress-bar">
+        <div className="progress" style={{ width: `${progress}%` }}></div>
+      </div>
+    );
   };
 
   const handleOptionSelect = (option) => {
@@ -246,7 +335,7 @@ function App() {
       <div className="App">
         <div className="quiz-card start-screen">
           <h1>Welcome to the Quiz!</h1>
-          <p>Test your knowledge with our 10-question quiz. Select a difficulty level to begin.</p>
+          <p>Test your knowledge with our quiz. Select a difficulty level to begin.</p>
           <div className="difficulty-selection">
             <button onClick={() => setDifficulty('easy')} className={`difficulty-btn ${difficulty === 'easy' ? 'selected' : ''}`}>Easy</button>
             <button onClick={() => setDifficulty('medium')} className={`difficulty-btn ${difficulty === 'medium' ? 'selected' : ''}`}>Medium</button>
@@ -274,9 +363,7 @@ function App() {
             <h2>Question {currentQuestion + 1}/{questions.length}</h2>
             <p className="timer">Time left: {timeLeft} seconds</p>
           </div>
-          <div className="progress-bar">
-            <div className="progress" style={{ width: `${(currentQuestion / questions.length) * 100}%` }}></div>
-          </div>
+          {renderProgressBar()}
           <p className="question">{questions[currentQuestion].question}</p>
           {renderQuestion()}
           {showExplanation && (
